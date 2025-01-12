@@ -31,7 +31,7 @@
     <div id="result"></div>
     <div class="container" id="create"><!---POST-->
         <h2>Crear Nuevo Elemento</h2>
-        <form id="post-form" hx-post="http://localhost:8080/example" hx-target="#result" hx-swap="innerHTML" hx-ext='json-enc'>
+        <form hx-post="http://localhost:8080/example" hx-target="#result" hx-swap="innerHTML" hx-ext='json-enc'>
             <label for="name">Nombre:</label>
             <input type="text" id="name" name="name" required>
             <label for="description">Descripción:</label>
@@ -40,10 +40,7 @@
         </form>            
     </div>
     <script>
-        const accionPost=()=>{
-            alert("Creado Exitosamente");
-        }
-        
+        const accionPost=()=>{alert("Creado Exitosamente");}
     </script>
     <div class="container" id="delete"><!---Delete-->
         <h2>Eliminar Elemento</h2>        
