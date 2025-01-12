@@ -1,5 +1,8 @@
-# CRUD básico en C
-Este proyecto implementa un servidor HTTP básico en C que proporciona operaciones CRUD, para pasar el rato.
+<a name="readme-top"></a>
+
+# CRUD básico en C + HTMX
+Este proyecto implementa un servidor HTTP básico en C que proporciona operaciones CRUD, con interacción dinámica en el frontend mediante HTMX básico, para pasar el rato.
+[![C-HTMX.png](https://i.postimg.cc/yxcmDG4b/C-HTMX.png)](https://postimg.cc/BPZLyMvT)
 
 * Biblioteca Cliente de PostgreSQL
 ````
@@ -60,6 +63,9 @@ El servidor implementa los siguientes endpoints para operar sobre la base de dat
 
 **Descripción:** Elimina el registro con el id especificado en la URL.
 
+## Integración con HTMX
+HTMX simplifica la interacción entre el servidor y el cliente. Al usar HTMX, las acciones como agregar, editar o eliminar un registro se reflejan inmediatamente en la página, sin necesidad de recargarla.
+
 ## Configuración de la Base de Datos
 PostgreSQL configurada con la siguiente tabla:
 
@@ -70,3 +76,5 @@ CREATE TABLE example (
     description TEXT NOT NULL
 );
 ````
+
+<p align="right">(<a href="#readme-top">volver arriba</a>)</p>
