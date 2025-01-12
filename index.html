@@ -8,15 +8,28 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>CRUD con HTMX y Backend C</h1>
+    <div class="navbar">
+        <div class="logo"></div>
+        <div class="links">
+            <a href="#inicio">Inicio</a>
+            <a href="#list">Listar</a>
+            <a href="#create">Crear</a>
+            <a href="#delete">Eliminar</a>
+            <a href="#update">Actualizar</a>
+        </div>
+    </div>
+
+    <div class="container" id="inicio">
+        <h2>CRUD con HTMX y Backend C</h2>
+    </div>
+    <div class="container" id="list">
         <h2>Listar Elementos</h2><!--GET-->
         <button hx-get="http://localhost:8080/example" hx-target="#result" hx-swap="innerHTML">
             Cargar Contenido
         </button>
     </div>
     <div id="result"></div>
-    <div class="container"><!---POST-->
+    <div class="container" id="create"><!---POST-->
         <h2>Crear Nuevo Elemento</h2>
         <form hx-post="http://localhost:8080/example" hx-target="#result" hx-swap="innerHTML" hx-ext='json-enc'>
             <label for="name">Nombre:</label>
@@ -26,8 +39,8 @@
             <button type="submit">Crear</button>
         </form>            
     </div>
-    <div id="result"></div><!--Delete-->
-    <div class="container">
+    <div id="result" ></div><!--Delete-->
+    <div class="container" id="delete">
         <h2>Eliminar Elemento</h2>        
         <form id="delete-form" hx-target="#result" hx-swap="innerHTML">
             <label for="delete_id">ID a Eliminar:</label>
@@ -48,7 +61,7 @@
           });
         });
     </script>    
-    <div class="container">
+    <div class="container" id="update">
         <h2>Actualizar Elemento</h2><!--PUT-->
         <form id="update-form">
             <label for="update_id">ID a Actualizar:</label>
