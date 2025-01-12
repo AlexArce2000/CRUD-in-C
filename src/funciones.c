@@ -12,10 +12,24 @@
 #define QUERY_SIZE 1024
 
 
+
+void handle_options(int client_socket) {
+    // Enviar encabezados CORS adecuados para solicitudes preflight
+    send_response(client_socket, "200 OK", "application/json", "");
+}
+
+// Función para enviar la respuesta con encabezados CORS
 void send_response(int client_socket, const char *status, const char *content_type, const char *content) {
     char buffer[BUFFER_SIZE];
     snprintf(buffer, sizeof(buffer),
-             "HTTP/1.1 %s\r\nContent-Type: %s\r\nContent-Length: %lu\r\n\r\n%s",
+             "HTTP/1.1 %s\r\n"
+             "Content-Type: %s\r\n"
+             "Content-Length: %lu\r\n"
+             "Access-Control-Allow-Origin: *\r\n"  // Permite solicitudes de cualquier origen
+             "Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS\r\n"
+             "Access-Control-Allow-Headers: Content-Type, hx-current-url, hx-request, hx-target\r\n" //Especifica los encabezados permitidos que el navegador puede enviar
+             "Access-Control-Max-Age: 3600\r\n"  // Opcional: para indicar que el navegador puede almacenar los resultados de la preflight durante 1 hora
+             "\r\n%s",
              status, content_type, strlen(content), content);
     write(client_socket, buffer, strlen(buffer));
 }
@@ -59,7 +73,10 @@ void handle_client(int client_socket) {
 
     // Mostrar el cuerpo extraído para depuración
     printf("Extracted body:\n%s\n", body);
-
+    // Si la solicitud es OPTIONS, manejarla de forma especial
+    if (strstr(buffer, "OPTIONS /example") != NULL) {
+        handle_options(client_socket);
+    } 
     // Manejar solicitudes según el método HTTP
     if (strstr(buffer, "POST /example") != NULL) {
         handle_post(client_socket, conn, body);
@@ -150,6 +167,7 @@ void handle_get(int client_socket, PGconn *conn) {
 }
 
 void handle_delete(int client_socket, PGconn *conn, const char *buffer) {
+    printf("Request body: %s\n", buffer);
     char query[QUERY_SIZE];
     PGresult *res;
     char *id_start = strstr(buffer, "id=");
@@ -178,6 +196,9 @@ void handle_delete(int client_socket, PGconn *conn, const char *buffer) {
 }
 
 void handle_put(int client_socket, PGconn *conn, const char *body, const char *buffer) {
+    printf("Request buffer:\n%s\n", buffer); // Imprime la solicitud completa
+    printf("Request body:\n%s\n", body);    // Imprime el cuerpo de la solicitud
+
     char query[QUERY_SIZE];
     PGresult *res;
     char *id_start = strstr(buffer, "id=");
@@ -186,6 +207,7 @@ void handle_put(int client_socket, PGconn *conn, const char *body, const char *b
         char *id_end = strchr(id_start, ' ');
         if (id_end) {
             *id_end = '\0'; // Terminar la cadena del ID
+            printf("Extracted ID: %s\n", id_start);  // Imprime la ID extraída
 
             json_error_t error;
             json_t *root = json_loads(body, 0, &error);
@@ -205,6 +227,8 @@ void handle_put(int client_socket, PGconn *conn, const char *body, const char *b
 
             const char *name = json_string_value(name_json);
             const char *description = json_string_value(description_json);
+            printf("Received name: %s\n", name);  // Imprime el 'name'
+            printf("Received description: %s\n", description);  // Imprime el 'description'
 
             char *escaped_name = PQescapeLiteral(conn, name, strlen(name));
             char *escaped_description = PQescapeLiteral(conn, description, strlen(description));

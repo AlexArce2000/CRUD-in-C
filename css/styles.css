@@ -1,0 +1,38 @@
+.container {
+    background-color: #ffffff;
+    border-radius: 8px;
+}
+.container h1{
+    font-style:unset;
+    color: #2b5f13;
+}
+
+/* Estilo del botón */
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:active {
+    background-color: #388e3c;
+}
+
+#result {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fafafa;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
