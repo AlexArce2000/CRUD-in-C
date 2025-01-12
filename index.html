@@ -19,8 +19,8 @@
         </div>
     </div>
 
-    <div class="container" id="inicio">
-        <h2>CRUD con HTMX y Backend C</h2>
+    <div class="cabecero" id="inicio">
+        <h2>CRUD con HTMX + Backend C</h2>
     </div>
     <div class="container" id="list">
         <h2>Listar Elementos</h2><!--GET-->
@@ -31,23 +31,27 @@
     <div id="result"></div>
     <div class="container" id="create"><!---POST-->
         <h2>Crear Nuevo Elemento</h2>
-        <form hx-post="http://localhost:8080/example" hx-target="#result" hx-swap="innerHTML" hx-ext='json-enc'>
+        <form id="post-form" hx-post="http://localhost:8080/example" hx-target="#result" hx-swap="innerHTML" hx-ext='json-enc'>
             <label for="name">Nombre:</label>
             <input type="text" id="name" name="name" required>
             <label for="description">Descripción:</label>
             <input type="text" id="description" name="description" required>
-            <button type="submit">Crear</button>
+            <button type="submit" onclick="accionPost()">Crear</button>
         </form>            
     </div>
-    <div id="result" ></div><!--Delete-->
-    <div class="container" id="delete">
+    <script>
+        const accionPost=()=>{
+            alert("Creado Exitosamente");
+        }
+        
+    </script>
+    <div class="container" id="delete"><!---Delete-->
         <h2>Eliminar Elemento</h2>        
         <form id="delete-form" hx-target="#result" hx-swap="innerHTML">
             <label for="delete_id">ID a Eliminar:</label>
             <input type="text" id="delete_id" name="id" required>
-            <button type="submit">Eliminar</button>
+            <button type="submit" onclick="accionDelete()">Eliminar</button>
         </form>
-    
     </div>
     <script>
         document.getElementById('delete-form').addEventListener('submit', function (e) {
@@ -59,8 +63,15 @@
             target: "#result",
             swap: "innerHTML"
           });
+          document.getElementById('delete-form').reset();
+
         });
-    </script>    
+        const accionDelete=()=>{
+            alert("Eliminado Exitosamente")
+        }
+        
+    </script>
+        
     <div class="container" id="update">
         <h2>Actualizar Elemento</h2><!--PUT-->
         <form id="update-form">
@@ -70,7 +81,7 @@
             <input type="text" id="update_name" name="name" required>
             <label for="update_description">Nueva Descripción:</label>
             <input type="text" id="update_description" name="description" required>
-            <button type="submit">Actualizar</button>
+            <button type="submit" onclick="accionPut()">Actualizar</button>
         </form>            
     </div>
     
@@ -102,9 +113,15 @@
                 console.error('Error:', error);
                 document.getElementById('result').innerHTML = 'Error al actualizar el elemento';
             });
+            document.getElementById('update-form').reset();
+
         });
+        const accionPut=()=>{
+            alert("Actualizado Exitosamente")
+        }
     </script>
-    <div id="result"></div>
+
+    
     <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/json-enc.js"></script> <!--json post-->
 
 </body>
