@@ -87,14 +87,13 @@ void test_delete_request() {
 }
 
 int main() {
-    printf("Testing GET request...\n");
-    test_get_request();
-    printf("\n");
-    
     printf("Testing POST request...\n");
     test_post_request();
     printf("\n");
-    printf("Testing PUT request...\n");
+    printf("Testing GET request...\n");
+    test_get_request();
+    printf("\n"); 
+    printf("Testing PUT request...\n"); // TODO: falta implementar las ids dinamicas cuando se cree en el post para el put y delete
     test_put_request();
     printf("\n");
     printf("Testing DELETE request...\n");

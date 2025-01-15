@@ -25,7 +25,10 @@ Para eliminar el ejecutable:
 ```
 make clean
 ```
-
+Para realizar los test:
+```
+make test
+```
 ## Endopoints
 El servidor implementa los siguientes endpoints para operar sobre la base de datos:
 
