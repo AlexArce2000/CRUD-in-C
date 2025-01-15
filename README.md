@@ -11,7 +11,10 @@ sudo apt-get install libpq-dev
 * Biblioteca para Manejo de JSON
 ````
 sudo apt-get install libjansson-dev
-
+````
+* Biblioteca para realizar los test
+````
+sudo apt-get install libcurl4-openssl-dev
 ````
 
 ## Instrucciones de Compilación y Ejecución

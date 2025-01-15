@@ -18,8 +18,11 @@ $(SRC_DIR)/%.o: $(SRC_DIR)/%.c
 
 # Regla para limpiar los archivos generados
 clean:
-	@rm -f $(TARGET) $(OBJS)
+	@rm -f $(TARGET) $(OBJS) $(SRC_DIR)/test
 run: $(TARGET)
 	./$(TARGET)
+test: $(SRC_DIR)/test.c
+	@$(CC) $(CFLAGS) -o $(SRC_DIR)/test $(SRC_DIR)/test.c -lcurl
+	@./$(SRC_DIR)/test
 
 .PHONY: all clean run
